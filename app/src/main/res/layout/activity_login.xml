@@ -42,16 +42,31 @@
         android:hint="Password"
         android:inputType="textPassword" />
 
+    <TextView
+        android:id="@+id/cfpassword_login_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cfpassword_login_value" />
+
+    <EditText
+        android:id="@+id/cfpassword_login_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
     <Button
         android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickSignIn"
+        android:onClick="onClickButton"
         android:text="@string/login_login_button" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/navigate_login_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClickSwitchLoginSignUp"
         android:text="@string/login_singup_navigate_text" />
 </LinearLayout>

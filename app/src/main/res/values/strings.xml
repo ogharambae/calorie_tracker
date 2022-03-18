@@ -6,6 +6,9 @@
     <string name="login_email_label">Email</string>
     <string name="login_password_label">Password</string>
     <string name="login_login_button">Login</string>
+    <string name="login_signup_button">Sign Up</string>
     <string name="empty_string" />
     <string name="login_singup_navigate_text">Does not have an account, register here</string>
+    <string name="cfpassword_login_value">Confirm Password</string>
+    <string name="login_login_navigate_text">Already had an account? click here to login</string>
 </resources>
