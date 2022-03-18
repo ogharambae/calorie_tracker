@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "435996247534",
+    "project_id": "calories-tracker-a2ef6",
+    "storage_bucket": "calories-tracker-a2ef6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435996247534:android:3fe10c88bb16c0f1207aff",
+        "android_client_info": {
+          "package_name": "com.bcit.calories_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435996247534-a082rarrss347pi6q5ic4sk0pa9ko469.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE-joeVjifet9uVcUESeQGOIdkOmehh18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435996247534-a082rarrss347pi6q5ic4sk0pa9ko469.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
