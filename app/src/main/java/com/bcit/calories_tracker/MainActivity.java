@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -25,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else {
-            setContentView(R.layout.activity_main);
             this.updateUI();
         }
     }
@@ -37,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateUI() {
+        Log.d("DEBUG/MainActivity", "here");
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            Log.d("DEBUG/MainActivity", "here inside");
             TextView textView = findViewById(R.id.textView_main);
             if (textView != null) {
                 textView.setText("Welcome " + currentUser.getEmail());

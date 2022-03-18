@@ -85,6 +85,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Do nothing if email or password empty
         if (email.trim().equals("") || password.trim().equals("")) {
+            Toast.makeText(LoginActivity.this,
+                    "Please fill in all the fields!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -120,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Do nothing if email, password, or confirm password empty
         if (email.trim().equals("") || password.trim().equals("") || cfPassword.trim().equals("")) {
+            Toast.makeText(LoginActivity.this,
+                    "Please fill in all the fields!",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -139,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("DEBUG/LoginActivity", "createUserWithEmail:success");
+                            finish();
                         } else {
                             try {
                                 throw task.getException();
