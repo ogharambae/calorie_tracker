@@ -112,4 +112,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
         fragmentTransaction.commit();
     }
+
+    public void switchToInfoFragment() {
+        Fragment fragment = InfoFragment.newInstance("test", "test");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+        fragmentTransaction.commit();
+    }
 }

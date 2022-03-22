@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,8 +33,8 @@ public class NewMealFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
      * @return A new instance of fragment NewMealFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -64,7 +65,13 @@ public class NewMealFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //button onItemSelected{
+        Button button = view.findViewById(R.id.button_newMeal_test);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((MainActivity) getActivity()).switchToInfoFragment();
+            }
+        });
 
         //Intent intent = new Intent(view.getContext, InfoActivity)
         //startActivity(intent)

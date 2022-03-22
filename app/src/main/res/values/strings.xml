@@ -19,5 +19,14 @@
     <string name="drawer_item_homepage">Homepage</string>
     <string name="drawer_item_new_meal">New Meal</string>
     <string name="drawer_item_history">History</string>
+    <string name="tab">All</string>
+    <string name="tab_recent">Recent</string>
+    <string name="tab_my_meals">My Meals</string>
+    <string name="tab_my_items">My Items</string>
+    <string name="search_bar">type in the item here</string>
+    <string name="textview_bestMatch">Best Match</string>
+    <string name="textview_bestmatch">Best Match</string>
+    <string name="textview_bestMatch_desc">the item goes here</string>
+    <string name="button">Search</string>
 
 </resources>

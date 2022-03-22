@@ -5,10 +5,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +27,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class InfoFragment extends Fragment {
+    FirebaseFirestore db;
+    Meal[] meals;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +41,7 @@ public class InfoFragment extends Fragment {
 
     public InfoFragment() {
         // Required empty public constructor
+        db = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -55,6 +69,7 @@ public class InfoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        getFoodItems();
     }
 
     @Override
@@ -67,7 +82,7 @@ public class InfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        // Search function goes here
         /**
          * Button button = findViewBYId()
          Button button = view.findViewById(R.id.button_homepage);
@@ -83,4 +98,38 @@ public class InfoFragment extends Fragment {
         });
          */
     }
+
+    public void getFoodItems() {
+        List<Meal> listOfFood = new ArrayList<>();
+        System.out.println("Hello");
+        db.collection("foods")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document: task.getResult()) {
+                                Log.d("Debug", document.getData().toString());
+
+                                listOfFood.add(
+                                        new Meal(
+                                                document.getData().get("name").toString(),
+                                                document.getData().get("cal").toString(),
+                                                document.getData().get("carb").toString(),
+                                                document.getData().get("fat").toString(),
+                                                document.getData().get("protein").toString(),
+                                                1
+                                        )
+                                );
+                            }
+                        } else {
+                            Log.w("Debug", "Error getting documents.", task.getException());
+                        }
+                        meals = listOfFood.toArray(new Meal[listOfFood.size()]);
+                    }
+                });
+    }
+
+
+
 }
