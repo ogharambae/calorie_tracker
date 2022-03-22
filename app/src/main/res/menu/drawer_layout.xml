@@ -5,9 +5,15 @@
 
     <group android:id="@+id/group1"
         android:checkableBehavior="single" >
-        <item android:title="Item" />
-        <item android:title="Item" />
-        <item android:title="Item" />
+        <item
+            android:id="@+id/item_drawer_homepage"
+            android:title="@string/drawer_item_homepage" />
+        <item
+            android:id="@+id/item_drawer_newmeal"
+            android:title="@string/drawer_item_new_meal" />
+        <item
+            android:id="@+id/item_drawer_history"
+            android:title="@string/drawer_item_history" />
     </group>
     <group android:id="@+id/group2"
         android:checkableBehavior="single">

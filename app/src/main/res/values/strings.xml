@@ -16,5 +16,8 @@
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
     <string name="drawer_signout">Log Out</string>
+    <string name="drawer_item_homepage">Homepage</string>
+    <string name="drawer_item_new_meal">New Meal</string>
+    <string name="drawer_item_history">History</string>
 
 </resources>

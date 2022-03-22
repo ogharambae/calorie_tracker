@@ -5,12 +5,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else {
-
             this.updateUI();
         }
     }
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -57,21 +56,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         if (currentUser == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             return;
         }
-
         this.configureDrawer();
-
-        // Do stuff inside here
-//            Log.d("DEBUG/MainActivity", "here inside");
-//            TextView textView = findViewById(R.id.textView_main);
-//            if (textView != null) {
-//                textView.setText("Welcome " + currentUser.getEmail());
-//            }
     }
 
     public void configureDrawer() {
@@ -83,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Attach click event to drawer items
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView_main);
+        NavigationView navigationView = findViewById(R.id.navigationView_main);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -94,6 +84,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mAuth.signOut();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        } else if (item.getItemId() == R.id.item_drawer_homepage) {
+            Fragment fragment = HomepageFragment.newInstance("test", "test");
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+            fragmentTransaction.commit();
+        } else if (item.getItemId() == R.id.item_drawer_newmeal) {
+            Fragment fragment = NewMealFragment.newInstance("test", "test");
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+            fragmentTransaction.commit();
+        } else if (item.getItemId() == R.id.item_drawer_history) {
+            Fragment fragment = HistoryFragment.newInstance("test", "test");
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+            fragmentTransaction.commit();
         }
 
         //close navigation drawer

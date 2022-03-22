@@ -8,6 +8,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView_main"
+        android:name="com.bcit.calories_tracker.HomepageFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView_main"
         android:layout_width="wrap_content"
