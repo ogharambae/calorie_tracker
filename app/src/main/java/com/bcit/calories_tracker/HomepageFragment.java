@@ -6,10 +6,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.util.Map;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,13 +40,14 @@ public class HomepageFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    FirebaseFirestore db;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public HomepageFragment() {
-        // Required empty public constructor
+        db = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -65,10 +84,62 @@ public class HomepageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_homepage, container, false);
     }
 
+    void getMeals() {
+
+        List<Meal> meals = new ArrayList<>();
+
+        db.collection("input-meals")
+                .get()
+                .addOnCompleteListener(
+                        new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                // use to get the corresponding time for this meal.
+                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                                LocalDateTime now = LocalDateTime.now();
+                                String date = dtf.format(now);
+
+                                if (task.isSuccessful()) {
+
+                                    try {
+
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d("Debug", document.getData().toString());
+                                            HashMap<String, ArrayList> mealEntry
+                                                    = (HashMap) document.getData().get(date);
+
+                                            for (int i = 0; i < mealEntry.get("meals").size(); i++) {
+                                                HashMap meal =
+                                                        (HashMap) mealEntry.get("meals").get(i);
+
+                                                meals.add(
+                                                        new Meal((String) meal.get("name"),
+                                                                (String) meal.get("cal"),
+                                                                (String) meal.get("carb"),
+                                                                (String) meal.get("fat"),
+                                                                (String) meal.get("protein"),
+                                                                2
+                                                        )
+                                                );
+                                            }
+                                        }
+                                        // This will be where we populate
+                                        // the recycler view.
+
+                                    } catch (NullPointerException e) {
+                                        Log.d("Debug", "NULL POINTER");
+                                    }
+                                }
+                            }
+                        }
+                );
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        getMeals();
         Button button = view.findViewById(R.id.button_homepage);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
