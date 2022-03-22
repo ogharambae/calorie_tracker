@@ -11,4 +11,10 @@
     <string name="login_singup_navigate_text">Does not have an account, register here</string>
     <string name="cfpassword_login_value">Confirm Password</string>
     <string name="login_login_navigate_text">Already had an account? click here to login</string>
+
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="drawer_signout">Log Out</string>
+
 </resources>
