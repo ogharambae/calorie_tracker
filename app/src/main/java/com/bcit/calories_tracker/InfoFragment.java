@@ -93,7 +93,11 @@ public class InfoFragment extends Fragment {
             public void onClick(View buttonView) {
                 EditText editText = view.findViewById(R.id.editText_info_search);
                 String userSearch = editText.getText().toString();
-                List<Meal> results = getSearchResult(userSearch);
+                Meal[] results = getSearchResult(userSearch).toArray(new Meal[meals.length]);
+
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
+                InfoRecyclerViewAdapter adapter = new InfoRecyclerViewAdapter(results);
+                recyclerView.setAdapter(adapter);
             }
         });
     }
