@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +43,7 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     FirebaseFirestore db;
+    private ArrayList<Meal> user_meals;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,6 +51,7 @@ public class HomepageFragment extends Fragment {
 
     public HomepageFragment() {
         db = FirebaseFirestore.getInstance();
+        user_meals = new ArrayList<Meal>();
     }
 
     /**
@@ -84,9 +88,7 @@ public class HomepageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_homepage, container, false);
     }
 
-    void getMeals() {
-
-        List<Meal> meals = new ArrayList<>();
+    void getMeals(View view) {
 
         db.collection("input-meals")
                 .get()
@@ -113,7 +115,7 @@ public class HomepageFragment extends Fragment {
                                                 HashMap meal =
                                                         (HashMap) mealEntry.get("meals").get(i);
 
-                                                meals.add(
+                                                user_meals.add(
                                                         new Meal((String) meal.get("name"),
                                                                 (String) meal.get("cal"),
                                                                 (String) meal.get("carb"),
@@ -124,8 +126,13 @@ public class HomepageFragment extends Fragment {
                                                 );
                                             }
                                         }
-                                        // This will be where we populate
-                                        // the recycler view.
+
+                                        Meal[] allMeals = user_meals.toArray(new Meal[user_meals.size()]);
+                                        RecyclerView rcv = view.findViewById(R.id.recycler_homepage);
+                                        HomePageMealsRecycler mealAdapter =
+                                                new HomePageMealsRecycler(allMeals);
+                                        rcv.setAdapter(mealAdapter);
+                                        rcv.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
                                     } catch (NullPointerException e) {
                                         Log.d("Debug", "NULL POINTER");
@@ -139,7 +146,7 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getMeals();
+        getMeals(view);
         Button button = view.findViewById(R.id.button_homepage);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
