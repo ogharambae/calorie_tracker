@@ -8,11 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="73dp"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editText_newMeal_search"
+            android:id="@+id/editText_info_search"
             android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -21,30 +21,13 @@
             android:text="@string/search_bar" />
 
         <Button
-            android:id="@+id/button_newMeal"
+            android:id="@+id/button_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button"
             android:textColor="#212121"
             tools:ignore="TextContrastCheck" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/editText_newMeal_search3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        android:text="@string/search_bar" />
-
-    <Button
-        android:id="@+id/button_newMeal3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button"
-        android:textColor="#212121"
-        tools:ignore="TextContrastCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

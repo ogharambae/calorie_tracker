@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -83,20 +86,16 @@ public class InfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Search function goes here
-        /**
-         * Button button = findViewBYId()
-         Button button = view.findViewById(R.id.button_homepage);
-         button.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Meal meal = new Meal("Apple", 2, 100);
-            Meal[] meals = new Meal[1];
-            meals[0] = meal;
 
-            ((MainActivity) getActivity()).switchToNewMealFragment(meals);
-        }
+        Button button = view.findViewById(R.id.button_info);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View buttonView) {
+                EditText editText = view.findViewById(R.id.editText_info_search);
+                String userSearch = editText.getText().toString();
+                List<Meal> results = getSearchResult(userSearch);
+            }
         });
-         */
     }
 
     public void getFoodItems() {
@@ -108,7 +107,7 @@ public class InfoFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document: task.getResult()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("Debug", document.getData().toString());
 
                                 listOfFood.add(
@@ -126,10 +125,18 @@ public class InfoFragment extends Fragment {
                             Log.w("Debug", "Error getting documents.", task.getException());
                         }
                         meals = listOfFood.toArray(new Meal[listOfFood.size()]);
+                        System.out.println(meals.length);
                     }
                 });
     }
 
-
-
+    public List<Meal> getSearchResult(String searchKeyWord) {
+        List<Meal> mealList = new ArrayList<>();
+        for (Meal meal: meals) {
+            if (meal.getName().contains(searchKeyWord)) {
+                mealList.add(meal);
+            }
+        }
+        return mealList;
+    }
 }
