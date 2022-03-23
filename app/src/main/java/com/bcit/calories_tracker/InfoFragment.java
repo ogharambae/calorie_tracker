@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -88,15 +90,16 @@ public class InfoFragment extends Fragment {
         // Search function goes here
 
         Button button = view.findViewById(R.id.button_info);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View buttonView) {
                 EditText editText = view.findViewById(R.id.editText_info_search);
                 String userSearch = editText.getText().toString();
                 Meal[] results = getSearchResult(userSearch).toArray(new Meal[meals.length]);
-
-                RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
                 InfoRecyclerViewAdapter adapter = new InfoRecyclerViewAdapter(results);
+                RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
+                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -104,7 +107,6 @@ public class InfoFragment extends Fragment {
 
     public void getFoodItems() {
         List<Meal> listOfFood = new ArrayList<>();
-        System.out.println("Hello");
         db.collection("foods")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -129,7 +131,6 @@ public class InfoFragment extends Fragment {
                             Log.w("Debug", "Error getting documents.", task.getException());
                         }
                         meals = listOfFood.toArray(new Meal[listOfFood.size()]);
-                        System.out.println(meals.length);
                     }
                 });
     }
@@ -143,4 +144,5 @@ public class InfoFragment extends Fragment {
         }
         return mealList;
     }
+
 }
