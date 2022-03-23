@@ -29,4 +29,8 @@
     <string name="textview_bestMatch_desc">the item goes here</string>
     <string name="button">Search</string>
 
+
+    <string name="textview_home_page_title">Your day in food</string>
+    <string name="cals_consumed_today_home_page"> Consumed Today </string>
+    <string name="add_meal_button_home_page">+ Add Meal</string>
 </resources>

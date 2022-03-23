@@ -20,13 +20,24 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
         private final TextView foodName;
         private final TextView calories;
         private final TextView fat;
+        private final TextView carbs;
+        private final TextView protein;
 
         public ViewHolder(View view) {
             super(view);
             foodName = view.findViewById(R.id.foodName_homepage);
             calories = view.findViewById(R.id.cals_homepage);
             fat = view.findViewById(R.id.fat_homepage);
+            carbs = view.findViewById(R.id.carb_homepage);
+            protein = view.findViewById(R.id.protein_homepage);
+        }
 
+        public TextView getCarbs() {
+            return carbs;
+        }
+
+        public TextView getProtein() {
+            return protein;
         }
 
         public TextView getFoodName() {
@@ -70,9 +81,15 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        String fat = "Fat: " + localDataSet[position].getFat();
+        String cal = "Cal: " + localDataSet[position].getCal();
+        String protein = "Protein: " + localDataSet[position].getProtein();
+        String carb = "Carbs: " + localDataSet[position].getProtein();
         viewHolder.getFoodName().setText(localDataSet[position].getName());
-        viewHolder.getCalories().setText(localDataSet[position].getCal());
-        viewHolder.getFat().setText(localDataSet[position].getFat());
+        viewHolder.getCalories().setText(cal);
+        viewHolder.getFat().setText(fat);
+        viewHolder.getCarbs().setText(carb);
+        viewHolder.getProtein().setText(protein);
 
     }
 

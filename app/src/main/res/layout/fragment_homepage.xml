@@ -3,25 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="right"
     android:background="@color/bgColor"
     android:orientation="vertical"
     tools:context=".HomepageFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Homepage Fragment" />
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cals_burned_homepage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:textColor="@color/primaryColor"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/cals_title_homepage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/cals_consumed_today_home_page"
+            android:textColor="@color/primaryColor" />
+
+        <ProgressBar
+            android:id="@+id/calories_bar_homepage"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="300dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:progressTint="@color/progressBarColor" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title_login2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/andika_new_basic"
+        android:paddingBottom="10dp"
+        android:text="@string/textview_home_page_title"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_homepage"
         android:layout_width="match_parent"
-        android:layout_height="624dp" />
+        android:layout_height="429dp" />
 
     <Button
         android:id="@+id/button_homepage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:text="@string/add_meal_button_home_page" />
 
 </LinearLayout>
