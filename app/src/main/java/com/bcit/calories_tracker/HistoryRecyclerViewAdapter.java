@@ -5,7 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +28,14 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewTotalCal;
         private final TextView textViewDate;
+        private View thisView;
 
         public ViewHolder(View view) {
             super(view);
 
-            textViewTotalCal = view.findViewById(R.id.textView_history_item_totalcal); //error here should be expected, this is a template
-            textViewDate = view.findViewById(R.id.textView_history_item_date); //error here should be expected, this is a template
+            textViewTotalCal = view.findViewById(R.id.textView_history_item_totalcal);
+            textViewDate = view.findViewById(R.id.textView_history_item_date);
+            thisView = view;
         }
 
         public TextView getTextViewTotalCal() {
@@ -36,6 +44,10 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
 
         public TextView getTextViewDate() {
             return textViewDate;
+        }
+
+        public View getThisView() {
+            return thisView;
         }
     }
 
@@ -68,6 +80,32 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         Meal[] meals = localDataSet.get(position);
         viewHolder.getTextViewTotalCal().setText(Meal.calculateTotalCal(meals));
         viewHolder.getTextViewDate().setText(meals[0].getDate());
+        View wholeView = viewHolder.getThisView();
+
+        RecyclerView rcv = wholeView.findViewById(R.id.recyclerView_item_history);
+        HistoryItemRecyclerViewAdapter mealAdapter =
+                new HistoryItemRecyclerViewAdapter(meals);
+        rcv.setAdapter(mealAdapter);
+        rcv.setLayoutManager(new LinearLayoutManager(wholeView.getContext()));
+//
+//        wholeView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AppCompatActivity activity = (AppCompatActivity) wholeView.getContext();
+//                Fragment fragment = HistoryDetailFragment.newInstance("test", "test");
+//                activity.getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .setCustomAnimations(
+//                                R.anim.slide_in,  // enter
+//                                R.anim.fade_out,  // exit
+//                                R.anim.fade_in,   // popEnter
+//                                R.anim.slide_out  // popExit
+//                        )
+//                        .replace(R.id.fragmentContainerView_main, fragment)
+//                        .commit();
+//
+//            }
+//        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
