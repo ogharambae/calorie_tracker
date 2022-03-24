@@ -9,6 +9,7 @@ public class Meal implements Serializable {
     String fat;
     String protein;
     int quantity;
+    String date;
 
     public Meal(String name, String cal, String carb, String fat, String protein, int quantity) {
         this.name = name;
@@ -17,6 +18,11 @@ public class Meal implements Serializable {
         this.fat = fat;
         this.protein = protein;
         this.quantity = quantity;
+    }
+
+    public Meal(String name, String cal, String carb, String fat, String protein, String date, int quantity) {
+        this(name, cal, carb, fat, protein, quantity);
+        this.setDate(date);
     }
 
     public String getName() {
@@ -65,5 +71,23 @@ public class Meal implements Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public static String calculateTotalCal(Meal[] meals) {
+        int total_calories = 0;
+        for (Meal meal: meals) {
+            String calorieCount = meal.getCal();
+            String calValue = calorieCount.replaceAll("[^0-9]","");
+            total_calories += Integer.parseInt(calValue);
+        }
+        return total_calories + " cal";
     }
 }
