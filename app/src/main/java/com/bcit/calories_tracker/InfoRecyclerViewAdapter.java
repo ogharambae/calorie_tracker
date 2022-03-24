@@ -8,7 +8,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class InfoRecyclerViewAdapter extends RecyclerView.Adapter<InfoRecyclerViewAdapter.ViewHolder> {
+public class InfoRecyclerViewAdapter extends
+        RecyclerView.Adapter<InfoRecyclerViewAdapter.ViewHolder> {
 
     private Meal[] meals;
 
@@ -19,11 +20,13 @@ public class InfoRecyclerViewAdapter extends RecyclerView.Adapter<InfoRecyclerVi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView cal;
+        private View thisView;
 
         public ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.textView_info_item_name);
             cal = view.findViewById(R.id.textView_info_item_cal);
+            thisView = view;
         }
 
         public TextView getName() {
@@ -32,6 +35,10 @@ public class InfoRecyclerViewAdapter extends RecyclerView.Adapter<InfoRecyclerVi
 
         public TextView getCal() {
             return cal;
+        }
+
+        public View getThisView() {
+            return thisView;
         }
 
     }
@@ -64,6 +71,15 @@ public class InfoRecyclerViewAdapter extends RecyclerView.Adapter<InfoRecyclerVi
         // contents of the view with that element
         viewHolder.getName().setText(meals[position].getName());
         viewHolder.getCal().setText(meals[position].getCal());
+
+        View clickResult = viewHolder.getThisView();
+        clickResult.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                System.out.println("This is clickable.");
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)

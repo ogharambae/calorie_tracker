@@ -65,11 +65,10 @@
 
     <Button
         android:id="@+id/button_homepage"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="25dp"
         android:text="@string/add_meal_button_home_page" />
 
 </LinearLayout>
