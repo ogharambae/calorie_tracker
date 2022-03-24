@@ -1,10 +1,13 @@
 package com.bcit.calories_tracker;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -69,6 +72,7 @@ public class InfoRecyclerViewAdapter extends
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        Meal meal = meals[position];
         viewHolder.getName().setText(meals[position].getName());
         viewHolder.getCal().setText(meals[position].getCal());
 
@@ -77,7 +81,15 @@ public class InfoRecyclerViewAdapter extends
 
             @Override
             public void onClick(View view) {
-                System.out.println("This is clickable.");
+                System.out.println("Yes");
+
+                AppCompatActivity activity = (AppCompatActivity) clickResult.getContext();
+                Fragment mealDetails = new MealDetailFragment(meal);
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentContainerView_main, mealDetails)
+                        .addToBackStack(null).commit();
+
             }
         });
     }
