@@ -143,36 +143,25 @@ public class MealDetailFragment extends Fragment {
                                     HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
                                     ArrayList<Meal> meals = new ArrayList<>();
                                     meals.add(mealDetails);
-                                    data.put("meals", meals);
+                                    mData.put("meals", meals);
 
                                     db.collection("input-meals")
                                             .document(userId)
                                             .update(FieldPath.of(date), mData);
                                 }
                             } else {
-                                HashMap<String, ArrayList<Meal>> data = new HashMap<>();
+                                HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
                                 ArrayList<Meal> meals = new ArrayList<>();
                                 meals.add(mealDetails);
-                                data.put("meals", meals);
+                                mData.put("meals", meals);
 
                                 db.collection("input-meals")
                                         .document(userId)
-                                        .update(FieldPath.of(date), data);
+                                        .update(FieldPath.of(date), mData);
                             }
                         }
                     }
                 });
-
-
-                HashMap<String, ArrayList<Meal>> data = new HashMap<>();
-                ArrayList<Meal> meals = new ArrayList<>();
-                meals.add(mealDetails);
-                data.put("meals", meals);
-
-                db.collection("input-meals")
-                        .document(userId)
-//                        .set(mealDetails, SetOptions.mergeFields(date));
-                        .update(FieldPath.of(date), data);
             }
         });
     }

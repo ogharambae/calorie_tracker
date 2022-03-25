@@ -72,11 +72,5 @@ public class NewMealFragment extends Fragment {
                 ((MainActivity) getActivity()).switchToInfoFragment();
             }
         });
-
-        //Intent intent = new Intent(view.getContext, InfoActivity)
-        //startActivity(intent)
-        //
-        // }
-
     }
 }
