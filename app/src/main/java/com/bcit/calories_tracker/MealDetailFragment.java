@@ -6,10 +6,26 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.model.DatabaseId;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,10 +43,13 @@ public class MealDetailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Meal mealDetails;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     public MealDetailFragment(Meal meal) {
         // Required empty public constructor
         mealDetails = meal;
+        db = FirebaseFirestore.getInstance();
     }
 
     /**
@@ -81,5 +100,17 @@ public class MealDetailFragment extends Fragment {
         calories.setText(mealDetails.getCal());
         carb.setText(mealDetails.getCarb());
 
+        Button button = view.findViewById(R.id.button_meal_detail);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                String date = LocalDate.now().toString();
+                db.collection("input-meals")
+                        .document(userId)
+//                        .set(mealDetails, SetOptions.mergeFields(date));
+                        .update(FieldPath.of(date), FieldValue.arrayUnion(mealDetails));
+            }
+        });
     }
 }

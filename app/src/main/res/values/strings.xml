@@ -34,4 +34,9 @@
     <string name="cals_consumed_today_home_page"> Consumed Today </string>
     <string name="add_meal_button_home_page">+ Add Meal</string>
     <string name="history_title">Your history meals</string>
+    <string name="button_meal_detail">search</string>
+    <string name="textview_carbs">carbs</string>
+    <string name="textview_fat">fat</string>
+    <string name="textview_protein">protein</string>
+    <string name="textview_cal">cal</string>
 </resources>
