@@ -30,8 +30,9 @@
             android:id="@+id/button_meal_detail"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner"
             android:text="@string/button_meal_detail_add"
-            android:textColor="#212121" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout

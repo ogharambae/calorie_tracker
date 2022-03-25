@@ -40,4 +40,7 @@
     <string name="textview_protein">protein</string>
     <string name="textview_cal">cal</string>
     <string name="button_meal_detail_add">Add</string>
+    <string name="textview_item_meal">name</string>
+    <string name="textview_item_meal_cal">cal</string>
+    <string name="textview_info_frag">Results</string>
 </resources>

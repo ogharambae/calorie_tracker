@@ -3,20 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="10dp">
+    android:layout_marginTop="10dp"
+    android:background="@drawable/rounded_corner">
 
     <TextView
         android:id="@+id/textView_info_item_name"
         android:layout_width="277dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:paddingLeft="10dp"
+        android:text="@string/textview_item_meal"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/textView_info_item_cal"
         android:layout_width="109dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView"
-        android:textAlignment="textEnd" />
+        android:paddingRight="10dp"
+        android:text="@string/textview_item_meal_cal"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
 </LinearLayout>
