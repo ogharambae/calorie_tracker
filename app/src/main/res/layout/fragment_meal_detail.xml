@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/mealDetail_fragment_meal_details"
-            android:layout_width="231dp"
+            android:layout_width="235dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/hello_blank_fragment"
@@ -28,10 +28,9 @@
 
         <Button
             android:id="@+id/button_meal_detail"
-            android:layout_width="0dp"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_meal_detail"
+            android:text="@string/button_meal_detail_add"
             android:textColor="#212121" />
     </LinearLayout>
 

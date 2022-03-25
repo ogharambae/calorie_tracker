@@ -39,4 +39,5 @@
     <string name="textview_fat">fat</string>
     <string name="textview_protein">protein</string>
     <string name="textview_cal">cal</string>
+    <string name="button_meal_detail_add">Add</string>
 </resources>

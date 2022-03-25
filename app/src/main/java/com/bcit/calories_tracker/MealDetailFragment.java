@@ -5,19 +5,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -98,11 +110,69 @@ public class MealDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-                String date = LocalDate.now().toString();
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+                LocalDateTime now = LocalDateTime.now();
+                String date = dtf.format(now);
+
+                DocumentReference docRef = db.collection("input-meals").document(userId);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            assert document != null;
+                            if (document.exists()) {
+                                HashMap<String, Object> data = (HashMap<String, Object>) document.getData();
+                                ArrayList<Object> existedMeals = null;
+
+                                for (String key : data.keySet()) {
+                                    if (key.equals(date)) {
+                                        existedMeals = (ArrayList<Object>) ((HashMap<String, Object>) data.get(key)).get("meals");
+                                    }
+                                }
+
+                                if (existedMeals != null) {
+                                    HashMap<String, ArrayList<Object>> mData = new HashMap<>();
+                                    existedMeals.add(mealDetails);
+                                    mData.put("meals", existedMeals);
+
+                                    db.collection("input-meals")
+                                            .document(userId)
+                                            .update(FieldPath.of(date), mData);
+                                } else {
+                                    HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
+                                    ArrayList<Meal> meals = new ArrayList<>();
+                                    meals.add(mealDetails);
+                                    data.put("meals", meals);
+
+                                    db.collection("input-meals")
+                                            .document(userId)
+                                            .update(FieldPath.of(date), mData);
+                                }
+                            } else {
+                                HashMap<String, ArrayList<Meal>> data = new HashMap<>();
+                                ArrayList<Meal> meals = new ArrayList<>();
+                                meals.add(mealDetails);
+                                data.put("meals", meals);
+
+                                db.collection("input-meals")
+                                        .document(userId)
+                                        .update(FieldPath.of(date), data);
+                            }
+                        }
+                    }
+                });
+
+
+                HashMap<String, ArrayList<Meal>> data = new HashMap<>();
+                ArrayList<Meal> meals = new ArrayList<>();
+                meals.add(mealDetails);
+                data.put("meals", meals);
+
                 db.collection("input-meals")
                         .document(userId)
 //                        .set(mealDetails, SetOptions.mergeFields(date));
-                        .update(FieldPath.of(date), FieldValue.arrayUnion(mealDetails));
+                        .update(FieldPath.of(date), data);
             }
         });
     }

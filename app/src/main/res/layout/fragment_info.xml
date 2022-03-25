@@ -16,9 +16,9 @@
             android:layout_width="311dp"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Please enter the food"
             android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:text="@string/search_bar" />
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/button_info"
