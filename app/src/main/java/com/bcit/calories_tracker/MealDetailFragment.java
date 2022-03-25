@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +13,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.model.DatabaseId;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -91,14 +84,14 @@ public class MealDetailFragment extends Fragment {
         TextView name = view.findViewById(R.id.mealDetail_fragment_meal_details);
         TextView protein = view.findViewById(R.id.protein_mealDetails);
         TextView fat = view.findViewById(R.id.fat_mealDetails);
-        TextView calories = view.findViewById(R.id.calories_mealDetails);
-        TextView carb = view.findViewById(R.id.carb_mealDetails);
+        TextView calories = view.findViewById(R.id.cal_mealDetails);
+        TextView carb = view.findViewById(R.id.carbs_mealDetails);
 
         name.setText(mealDetails.getName());
-        protein.setText(mealDetails.getProtein());
-        fat.setText(mealDetails.getFat());
+        protein.setText(mealDetails.getProtein() + "\nProtein");
+        fat.setText(mealDetails.getFat() + "\nFat");
         calories.setText(mealDetails.getCal());
-        carb.setText(mealDetails.getCarb());
+        carb.setText(mealDetails.getCarb() + "\nCarbs");
 
         Button button = view.findViewById(R.id.button_meal_detail);
         button.setOnClickListener(new View.OnClickListener() {

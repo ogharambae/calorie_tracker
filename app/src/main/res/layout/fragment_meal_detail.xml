@@ -43,7 +43,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/carb_mealDetails"
+            android:id="@+id/cal_mealDetails"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/textview_border"
@@ -54,7 +54,7 @@
             android:textColor="@color/primaryColor" />
 
         <TextView
-            android:id="@+id/protein_mealDetails"
+            android:id="@+id/carbs_mealDetails"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:text="@string/textview_carbs"
@@ -62,7 +62,7 @@
             android:textColor="@color/primaryColor" />
 
         <TextView
-            android:id="@+id/calories_mealDetails"
+            android:id="@+id/fat_mealDetails"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:text="@string/textview_fat"
@@ -70,7 +70,7 @@
             android:textColor="@color/primaryColor" />
 
         <TextView
-            android:id="@+id/fat_mealDetails"
+            android:id="@+id/protein_mealDetails"
             android:layout_width="98dp"
             android:layout_height="wrap_content"
             android:text="@string/textview_protein"
