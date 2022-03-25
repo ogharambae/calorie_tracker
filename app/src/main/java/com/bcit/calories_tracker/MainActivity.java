@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FirebaseAuth mAuth;
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
+    public Meal[] foods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +115,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void switchToInfoFragment() {
-        Fragment fragment = InfoFragment.newInstance("test", "test");
+        Fragment fragment = InfoFragment.newInstance(foods);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
         fragmentTransaction.commit();
+    }
+
+    public void setFoods(Meal[] foods) {
+        this.foods = foods;
     }
 }

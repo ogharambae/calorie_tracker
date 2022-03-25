@@ -1,5 +1,6 @@
 package com.bcit.calories_tracker;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,10 +22,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +52,7 @@ public class InfoFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private Meal[] mParam1;
     private String mParam2;
 
     public InfoFragment() {
@@ -58,11 +69,10 @@ public class InfoFragment extends Fragment {
      * @return A new instance of fragment InfoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static InfoFragment newInstance(String param1, String param2) {
+    public static InfoFragment newInstance(Meal[] meals) {
         InfoFragment fragment = new InfoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_PARAM1, meals);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,10 +81,13 @@ public class InfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = (Meal[]) getArguments().getSerializable(ARG_PARAM1);
         }
-        getFoodItems();
+        if (mParam1 != null && mParam1.length > 0) {
+            meals = mParam1;
+        } else {
+            loadJSONFromAsset();
+        }
     }
 
     @Override
@@ -103,6 +116,56 @@ public class InfoFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
         });
+    }
+
+    public void loadJSONFromAsset() {
+        String json = readFromAsset(getActivity(), "meals.json");
+        try {
+            Gson gson = new Gson();
+            MealFile.Root records = gson.fromJson(json, MealFile.Root.class);
+            ArrayList<Meal> importMeals = new ArrayList<>();
+            for (MealFile.SurveyFood food : records.surveyFoods) {
+                String name = food.description.toLowerCase();
+
+                MealFile.FoodNutrient proteinNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Protein")).toArray()[0];
+                String protein = proteinNutrient.amount + " " + proteinNutrient.nutrient.unitName;
+                MealFile.FoodNutrient fatNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Total lipid (fat)")).toArray()[0];
+                String fat = fatNutrient.amount + " " + fatNutrient.nutrient.unitName;
+                MealFile.FoodNutrient carbNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Carbohydrate, by difference")).toArray()[0];
+                String carb = carbNutrient.amount + " " + carbNutrient.nutrient.unitName;
+                MealFile.FoodNutrient calNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Energy")).toArray()[0];
+                String cal = calNutrient.amount + " " + calNutrient.nutrient.unitName;
+                importMeals.add(new Meal(name, cal, carb, fat, protein, 1));
+            }
+
+            meals = new Meal[importMeals.size()];
+            for (int i = 0; i < importMeals.size(); i++) {
+                meals[i] = importMeals.get(i);
+            }
+            ((MainActivity) getActivity()).setFoods(meals);
+        } catch (Exception e) {
+            // we never know :)
+            Log.e("error parsing", e.toString());
+        }
+    }
+
+    //
+    private String readFromAsset(final Activity act, final String fileName) {
+        String text = "";
+        try {
+            InputStream is = act.getAssets().open(fileName);
+
+            int size = is.available();
+
+            // Read the entire asset into a local byte buffer.
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            text = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return text;
     }
 
     public void getFoodItems() {
@@ -137,7 +200,7 @@ public class InfoFragment extends Fragment {
 
     public List<Meal> getSearchResult(String searchKeyWord) {
         List<Meal> mealList = new ArrayList<>();
-        for (Meal meal: meals) {
+        for (Meal meal : meals) {
             if (meal.getName().contains(searchKeyWord)) {
                 mealList.add(meal);
             }
