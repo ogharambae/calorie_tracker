@@ -88,7 +88,7 @@ public class HistoryItemRecyclerViewAdapter extends RecyclerView.Adapter<History
         // contents of the view with that element
         Meal m = localDataSet[position];
         viewHolder.getTextViewItemIdx().setText("" + (position + 1));
-        viewHolder.getTextViewItemName().setText(this.convertToTitleCaseIteratingChars(m.getName()));
+        viewHolder.getTextViewItemName().setText(Meal.convertToTitleCaseIteratingChars(m.getName()));
         viewHolder.getTextViewItemCal().setText("Calories: " + m.getCal());
         viewHolder.getTextViewItemFat().setText("Fat: " + m.getFat());
         viewHolder.getTextViewItemProtein().setText("Protein: " + m.getProtein());
@@ -101,26 +101,5 @@ public class HistoryItemRecyclerViewAdapter extends RecyclerView.Adapter<History
         return localDataSet.length;
     }
 
-    public static String convertToTitleCaseIteratingChars(String text) {
-        if (text == null || text.isEmpty()) {
-            return text;
-        }
 
-        StringBuilder converted = new StringBuilder();
-
-        boolean convertNext = true;
-        for (char ch : text.toCharArray()) {
-            if (Character.isSpaceChar(ch)) {
-                convertNext = true;
-            } else if (convertNext) {
-                ch = Character.toTitleCase(ch);
-                convertNext = false;
-            } else {
-                ch = Character.toLowerCase(ch);
-            }
-            converted.append(ch);
-        }
-
-        return converted.toString();
-    }
 }

@@ -94,7 +94,7 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
         String carb = "Carbs: " + localDataSet[position].getProtein();
         String date = "Date: " + Meal.getMealDate();
 
-        viewHolder.getFoodName().setText(localDataSet[position].getName());
+        viewHolder.getFoodName().setText(Meal.convertToTitleCaseIteratingChars(localDataSet[position].getName()));
         viewHolder.getCalories().setText(cal);
         viewHolder.getFat().setText(fat);
         viewHolder.getCarbs().setText(carb);

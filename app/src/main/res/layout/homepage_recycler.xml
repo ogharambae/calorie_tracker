@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="10dp"
         app:cardUseCompatPadding="true">
 
@@ -36,6 +36,7 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -72,7 +74,7 @@
 
                     <TextView
                         android:id="@+id/dateConsumed_homepage"
-                        android:layout_width="200dp"
+                        android:layout_width="164dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -88,7 +90,7 @@
 
                     <TextView
                         android:id="@+id/fat_homepage"
-                        android:layout_width="200dp"
+                        android:layout_width="164dp"
                         android:layout_height="wrap_content" />
 
                     <TextView
@@ -99,7 +101,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
 
 
     </androidx.cardview.widget.CardView>
