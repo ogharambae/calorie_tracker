@@ -195,8 +195,7 @@ public class MealDetailFragment extends Fragment {
                         }
                     }
                 });
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.popBackStack();
+                ((MainActivity) getActivity()).switchToHomePageFragment();
             }
         });
     }

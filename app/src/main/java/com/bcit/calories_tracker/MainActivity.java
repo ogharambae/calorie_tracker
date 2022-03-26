@@ -122,4 +122,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setFoods(Meal[] foods) {
         this.foods = foods;
     }
+
+    public void switchToHomePageFragment() {
+        Fragment fragment = HomepageFragment.newInstance();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+        fragmentTransaction.commit();
+    }
 }
