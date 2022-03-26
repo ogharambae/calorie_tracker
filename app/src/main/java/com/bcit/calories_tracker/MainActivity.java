@@ -63,6 +63,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }
         this.configureDrawer();
+
+        Fragment fragment = HomepageFragment.newInstance("test", "test");
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     public void configureDrawer() {
