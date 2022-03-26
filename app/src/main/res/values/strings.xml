@@ -60,4 +60,5 @@
     <string name="static_calcium">Calcium</string>
     <string name="static_iron">Iron</string>
     <string name="nutritional_info">Nutritional Info</string>
+    <string name="textview_info_noResults">no results</string>
 </resources>

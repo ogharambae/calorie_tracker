@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -108,11 +110,18 @@ public class InfoFragment extends Fragment {
             public void onClick(View buttonView) {
                 EditText editText = view.findViewById(R.id.editText_info_search);
                 String userSearch = editText.getText().toString();
-                Meal[] results = getSearchResult(userSearch).toArray(new Meal[meals.length]);
-                InfoRecyclerViewAdapter adapter = new InfoRecyclerViewAdapter(results);
-                RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
-                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                recyclerView.setAdapter(adapter);
+                List<Meal> resultList = getSearchResult(userSearch);
+                TextView textView = view.findViewById(R.id.textView_info_noResults);
+                if (resultList.size() > 0) {
+                    textView.setText("");
+                    Meal[] results = getSearchResult(userSearch).toArray(new Meal[resultList.size()]);
+                    InfoRecyclerViewAdapter adapter = new InfoRecyclerViewAdapter(results);
+                    RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    recyclerView.setAdapter(adapter);
+                } else {
+                    textView.setText("Food item of that name does not exist!");
+                }
             }
         });
     }
