@@ -193,9 +193,9 @@ public class MealDetailFragment extends Fragment {
                                 }
                             }
                         }
+                        ((MainActivity) getActivity()).switchToHomePageFragment();
                     }
                 });
-                ((MainActivity) getActivity()).switchToHomePageFragment();
             }
         });
     }
