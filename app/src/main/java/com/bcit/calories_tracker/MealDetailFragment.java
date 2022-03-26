@@ -111,7 +111,7 @@ public class MealDetailFragment extends Fragment {
         TextView calcium = view.findViewById(R.id.textView_mealDetail_calcium);
         TextView iron = view.findViewById(R.id.textView_mealDetail_iron);
 
-        name.setText(mealDetails.getName());
+        name.setText(Meal.convertToTitleCaseIteratingChars(mealDetails.getName()));
         protein.setText(mealDetails.getProtein() + "\nProtein");
         fat.setText(mealDetails.getFat() + "\nFat");
         calories.setText(mealDetails.getCal());

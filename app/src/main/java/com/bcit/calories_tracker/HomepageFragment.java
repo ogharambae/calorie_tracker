@@ -97,7 +97,7 @@ public class HomepageFragment extends Fragment {
         ProgressBar caloriesBar = view.findViewById(R.id.calories_bar_homepage);
         caloriesBar.setMax(2000);
         caloriesBar.setProgress(Integer.parseInt(cals));
-        String yourCalories = cals + " Calories";
+        String yourCalories = cals + " cal";
         caloriesBurnedToday.setText(yourCalories);
     }
 
