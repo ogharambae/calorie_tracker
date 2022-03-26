@@ -13,19 +13,69 @@ public class Meal implements Serializable {
     String protein;
     int quantity;
     String date;
+    String cholesterol;
+    String sodium;
+    String vitaA;
+    String vitaB;
+    String vitaC;
+    String vitaD;
+    String calcium;
+    String iron;
 
-    public Meal(String name, String cal, String carb, String fat, String protein, int quantity) {
+    public Meal(String name, String cal, String carb, String fat, String protein, int quantity, String vitaA, String cholesterol,
+    String sodium, String vitaB, String vitaC, String vitaD, String calcium, String iron) {
         this.name = name;
         this.cal = cal;
         this.carb = carb;
         this.fat = fat;
         this.protein = protein;
         this.quantity = quantity;
+        this.vitaA = vitaA;
+        this.cholesterol = cholesterol;
+        this.sodium = sodium;
+        this.vitaB = vitaB;
+        this.vitaC = vitaC;
+        this.vitaD = vitaD;
+        this.calcium = calcium;
+        this.iron = iron;
     }
 
-    public Meal(String name, String cal, String carb, String fat, String protein, String date, int quantity) {
-        this(name, cal, carb, fat, protein, quantity);
+    public Meal(String name, String cal, String carb, String fat, String protein, String date, int quantity, String vitaA, String cholesterol,
+                String sodium, String vitaB, String vitaC, String vitaD, String calcium, String iron) {
+        this(name, cal, carb, fat, protein, quantity, vitaA, cholesterol, sodium, vitaB, vitaC, vitaD, calcium, iron);
         this.setDate(date);
+    }
+
+    public String getCholesterol() {
+        return cholesterol;
+    }
+
+    public String getSodium() {
+        return sodium;
+    }
+
+    public String getVitaB() {
+        return vitaB;
+    }
+
+    public String getVitaC() {
+        return vitaC;
+    }
+
+    public String getVitaD() {
+        return vitaD;
+    }
+
+    public String getCalcium() {
+        return calcium;
+    }
+
+    public String getIron() {
+        return iron;
+    }
+
+    public String getVitaA() {
+        return vitaA;
     }
 
     public String getName() {

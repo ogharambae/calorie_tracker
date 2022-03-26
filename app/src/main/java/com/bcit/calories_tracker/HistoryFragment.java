@@ -124,8 +124,16 @@ public class HistoryFragment extends Fragment {
                                         ((HashMap<String, String>) meal).get("fat"),
                                         ((HashMap<String, String>) meal).get("protein"),
                                         key,
-                                        1
-                                );
+                                        1,
+                                        ((HashMap<String, String>) meal).get("vitaminA"),
+                                        ((HashMap<String, String>) meal).get("cholesterol"),
+                                        ((HashMap<String, String>) meal).get("sodium"),
+                                        ((HashMap<String, String>) meal).get("vitaminB"),
+                                        ((HashMap<String, String>) meal).get("vitaminC"),
+                                        ((HashMap<String, String>) meal).get("vitaminD"),
+                                        ((HashMap<String, String>) meal).get("calcium"),
+                                        ((HashMap<String, String>) meal).get("iron")
+                                        );
                                 dailyMeals[idx] = m;
                                 idx++;
                             }

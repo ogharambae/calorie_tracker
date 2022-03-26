@@ -134,7 +134,25 @@ public class InfoFragment extends Fragment {
                 String carb = carbNutrient.amount + " " + carbNutrient.nutrient.unitName;
                 MealFile.FoodNutrient calNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Energy")).toArray()[0];
                 String cal = calNutrient.amount + " " + calNutrient.nutrient.unitName;
-                importMeals.add(new Meal(name, cal, carb, fat, protein, 1));
+                MealFile.FoodNutrient vitaANutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Vitamin A, RAE")).toArray()[0];
+                String vitaA = vitaANutrient.amount + " " + vitaANutrient.nutrient.unitName;
+
+                MealFile.FoodNutrient cholesterolNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Cholesterol")).toArray()[0];
+                String cholesterol = cholesterolNutrient.amount + " " + cholesterolNutrient.nutrient.unitName;
+                MealFile.FoodNutrient sodiumNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Sodium, Na")).toArray()[0];
+                String sodium = sodiumNutrient.amount + " " + sodiumNutrient.nutrient.unitName;
+                MealFile.FoodNutrient vitaBNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Vitamin B-6")).toArray()[0];
+                String vitaB = vitaBNutrient.amount + " " + vitaBNutrient.nutrient.unitName;
+                MealFile.FoodNutrient vitaCNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Vitamin C, total ascorbic acid")).toArray()[0];
+                String vitaC = vitaCNutrient.amount + " " + vitaCNutrient.nutrient.unitName;
+                MealFile.FoodNutrient vitaDNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Vitamin D (D2 + D3)")).toArray()[0];
+                String vitaD = vitaDNutrient.amount + " " + vitaDNutrient.nutrient.unitName;
+                MealFile.FoodNutrient calciumNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Calcium, Ca")).toArray()[0];
+                String calcium = calciumNutrient.amount + " " + calciumNutrient.nutrient.unitName;
+                MealFile.FoodNutrient ironNutrient = (MealFile.FoodNutrient) food.foodNutrients.stream().filter(f -> f.nutrient.name.equals("Iron, Fe")).toArray()[0];
+                String iron = ironNutrient.amount + " " + ironNutrient.nutrient.unitName;
+
+                importMeals.add(new Meal(name, cal, carb, fat, protein, 1, vitaA, cholesterol, sodium, vitaB, vitaC, vitaD, calcium, iron));
             }
 
             meals = new Meal[importMeals.size()];
@@ -185,7 +203,16 @@ public class InfoFragment extends Fragment {
                                                 document.getData().get("carb").toString(),
                                                 document.getData().get("fat").toString(),
                                                 document.getData().get("protein").toString(),
-                                                1
+                                                1,
+                                                document.getData().get("vitaA").toString(),
+                                                document.getData().get("cholesterol").toString(),
+                                                document.getData().get("sodium").toString(),
+                                                document.getData().get("vitaB").toString(),
+                                                document.getData().get("vitaC").toString(),
+                                                document.getData().get("vitaD").toString(),
+                                                document.getData().get("calcium").toString(),
+                                                document.getData().get("iron").toString()
+
                                         )
                                 );
                             }

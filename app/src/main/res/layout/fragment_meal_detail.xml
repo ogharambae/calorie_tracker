@@ -78,4 +78,167 @@
             android:textColor="@color/primaryColor" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="10dp"
+        android:text="@string/nutritional_info"
+        android:textAlignment="center"
+        android:textColor="@color/primaryColor"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="168dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_cholesterol"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_sodium"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_vitaA"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_vitaB"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_vitaC"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_vitaD"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_calcium"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/static_iron"
+                android:textAlignment="viewStart"
+                android:textColor="@color/primaryColor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="222dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_mealDetail_cholesterol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_choles"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_sodium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_sodium"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/vitaA_mealDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_vitaA"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_vitaB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_vitaB"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_vitaC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_vitaC"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_vitaD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_vitaD"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_calcium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_calcium"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+            <TextView
+                android:id="@+id/textView_mealDetail_iron"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textview_iron"
+                android:textAlignment="textEnd"
+                android:textColor="@color/primaryColor" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

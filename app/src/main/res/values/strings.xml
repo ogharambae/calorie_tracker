@@ -43,4 +43,21 @@
     <string name="textview_item_meal">name</string>
     <string name="textview_item_meal_cal">cal</string>
     <string name="textview_info_frag">Results</string>
+    <string name="textview_vitaA">vitaA</string>
+    <string name="textview_choles">cholesterol</string>
+    <string name="textview_sodium">sodum</string>
+    <string name="textview_vitaB">vitaB</string>
+    <string name="textview_vitaC">vitaC</string>
+    <string name="textview_vitaD">vitaD</string>
+    <string name="textview_calcium">calcium</string>
+    <string name="textview_iron">iron</string>
+    <string name="static_cholesterol">Cholesterol</string>
+    <string name="static_sodium">Sodium</string>
+    <string name="static_vitaA">Vitamin A</string>
+    <string name="static_vitaB">Vitamin B</string>
+    <string name="static_vitaC">Vitamin C</string>
+    <string name="static_vitaD">Vitamin D</string>
+    <string name="static_calcium">Calcium</string>
+    <string name="static_iron">Iron</string>
+    <string name="nutritional_info">Nutritional Info</string>
 </resources>

@@ -46,7 +46,7 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     FirebaseFirestore db;
     private ArrayList<Meal> user_meals;
-    private String userId;
+//    private String userId;
 
 
     // TODO: Rename and change types of parameters
@@ -56,8 +56,8 @@ public class HomepageFragment extends Fragment {
     public HomepageFragment() {
         db = FirebaseFirestore.getInstance();
         user_meals = new ArrayList<>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        userId = user.getUid();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        userId = user.getUid();
     }
 
     /**
@@ -116,6 +116,8 @@ public class HomepageFragment extends Fragment {
 
 
     void getMeals(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
 
         DocumentReference docRef = db.collection("input-meals")
                 .document(userId);
@@ -143,8 +145,16 @@ public class HomepageFragment extends Fragment {
                                             (String) meal.get("carb"),
                                             (String) meal.get("fat"),
                                             (String) meal.get("protein"),
-                                            2
-                                    ));
+                                            2,
+                                            (String) meal.get("vitaminA"),
+                                            (String) meal.get("cholesterol"),
+                                            (String) meal.get("sodium"),
+                                            (String) meal.get("vitaminB"),
+                                            (String) meal.get("vitaminC"),
+                                            (String) meal.get("vitaminD"),
+                                            (String) meal.get("calcium"),
+                                            (String) meal.get("iron")
+                                            ));
 
                             populateRecycler(view);
                             populateTotalCaloriesBurned(view);

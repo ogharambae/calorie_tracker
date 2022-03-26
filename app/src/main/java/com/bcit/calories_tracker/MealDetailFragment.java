@@ -24,6 +24,8 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -98,12 +100,28 @@ public class MealDetailFragment extends Fragment {
         TextView fat = view.findViewById(R.id.fat_mealDetails);
         TextView calories = view.findViewById(R.id.cal_mealDetails);
         TextView carb = view.findViewById(R.id.carbs_mealDetails);
+        TextView vitaA = view.findViewById(R.id.vitaA_mealDetail);
+        TextView cholesterol = view.findViewById(R.id.textView_mealDetail_cholesterol);
+        TextView sodium = view.findViewById(R.id.textView_mealDetail_sodium);
+        TextView vitaB = view.findViewById(R.id.textView_mealDetail_vitaB);
+        TextView vitaC = view.findViewById(R.id.textView_mealDetail_vitaC);
+        TextView vitaD = view.findViewById(R.id.textView_mealDetail_vitaD);
+        TextView calcium = view.findViewById(R.id.textView_mealDetail_calcium);
+        TextView iron = view.findViewById(R.id.textView_mealDetail_iron);
 
         name.setText(mealDetails.getName());
         protein.setText(mealDetails.getProtein() + "\nProtein");
         fat.setText(mealDetails.getFat() + "\nFat");
         calories.setText(mealDetails.getCal());
         carb.setText(mealDetails.getCarb() + "\nCarbs");
+        vitaA.setText(mealDetails.getVitaA());
+        cholesterol.setText(mealDetails.getCholesterol());
+        sodium.setText(mealDetails.getSodium());
+        vitaB.setText(mealDetails.getVitaB());
+        vitaC.setText(mealDetails.getVitaC());
+        vitaD.setText(mealDetails.getVitaD());
+        calcium.setText(mealDetails.getCalcium());
+        iron.setText(mealDetails.getIron());
 
         Button button = view.findViewById(R.id.button_meal_detail);
         button.setOnClickListener(new View.OnClickListener() {
