@@ -1,5 +1,6 @@
 package com.bcit.calories_tracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -117,58 +118,65 @@ public class HomepageFragment extends Fragment {
 
     void getMeals(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
 
-        DocumentReference docRef = db.collection("input-meals")
-                .document(userId);
+        if (user == null) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+        } else {
 
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("DocumentSnapshot data: ", document.getData().toString());
+            String userId = user.getUid();
 
-                        HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
-                        ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
+            DocumentReference docRef = db.collection("input-meals")
+                    .document(userId);
 
-                        System.out.println(allMeals);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d("DocumentSnapshot data: ", document.getData().toString());
 
-                        for (int i = 0; i < allMeals.size(); i++) {
-                            HashMap meal =
-                                    (HashMap) allMeals.get(i);
+                            HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
+                            ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
 
-                            user_meals.add(
-                                    new Meal((String) meal.get("name"),
-                                            (String) meal.get("cal"),
-                                            (String) meal.get("carb"),
-                                            (String) meal.get("fat"),
-                                            (String) meal.get("protein"),
-                                            2,
-                                            (String) meal.get("vitaminA"),
-                                            (String) meal.get("cholesterol"),
-                                            (String) meal.get("sodium"),
-                                            (String) meal.get("vitaminB"),
-                                            (String) meal.get("vitaminC"),
-                                            (String) meal.get("vitaminD"),
-                                            (String) meal.get("calcium"),
-                                            (String) meal.get("iron")
-                                            ));
+                            System.out.println(allMeals);
 
-                            populateRecycler(view);
-                            populateTotalCaloriesBurned(view);
+                            for (int i = 0; i < allMeals.size(); i++) {
+                                HashMap meal =
+                                        (HashMap) allMeals.get(i);
+
+                                user_meals.add(
+                                        new Meal((String) meal.get("name"),
+                                                (String) meal.get("cal"),
+                                                (String) meal.get("carb"),
+                                                (String) meal.get("fat"),
+                                                (String) meal.get("protein"),
+                                                2,
+                                                (String) meal.get("vitaminA"),
+                                                (String) meal.get("cholesterol"),
+                                                (String) meal.get("sodium"),
+                                                (String) meal.get("vitaminB"),
+                                                (String) meal.get("vitaminC"),
+                                                (String) meal.get("vitaminD"),
+                                                (String) meal.get("calcium"),
+                                                (String) meal.get("iron")
+                                        ));
+
+                                populateRecycler(view);
+                                populateTotalCaloriesBurned(view);
+                            }
+                        } else {
+                            Log.d("No such document", "Nothing");
                         }
                     } else {
-                        Log.d("No such document", "Nothing");
+                        Log.d("get failed with ", task.getException().toString());
                     }
-                } else {
-                    Log.d("get failed with ", task.getException().toString());
                 }
-            }
-        });
+            });
 
 
+        }
     }
 
     @Override
