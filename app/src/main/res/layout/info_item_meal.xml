@@ -4,12 +4,15 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginTop="10dp"
-    android:background="@drawable/rounded_corner">
+    android:background="@drawable/rounded_corner"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
 
     <TextView
         android:id="@+id/textView_info_item_name"
-        android:layout_width="277dp"
+        android:layout_width="247dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:paddingLeft="10dp"
         android:text="@string/textview_item_meal"
@@ -22,9 +25,11 @@
         android:layout_width="109dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:fontFamily="@font/andika_new_basic"
         android:paddingRight="10dp"
         android:text="@string/textview_item_meal_cal"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
-        android:textSize="16sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 </LinearLayout>

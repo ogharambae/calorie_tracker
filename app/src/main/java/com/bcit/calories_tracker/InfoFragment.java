@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,7 +116,44 @@ public class InfoFragment extends Fragment {
             progressBar.setVisibility(View.VISIBLE);
         }
 
+        EditText editText = view.findViewById(R.id.editText_info_search);
         Button button = view.findViewById(R.id.button_info);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_info);
+        TextView textView = view.findViewById(R.id.textView_info_noResults);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String userSearch = editText.getText().toString();
+                if (userSearch.equals("")) {
+                    textView.setText("");
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    List<Meal> resultList = getSearchResult(userSearch);
+                    if (resultList.size() > 0) {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        textView.setText("");
+                        Meal[] results = getSearchResult(userSearch).toArray(new Meal[resultList.size()]);
+                        InfoRecyclerViewAdapter adapter = new InfoRecyclerViewAdapter(results);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        textView.setText("Food item of that name does not exist!");
+                        recyclerView.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override

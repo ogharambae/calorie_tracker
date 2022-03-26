@@ -73,7 +73,7 @@ public class InfoRecyclerViewAdapter extends
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Meal meal = meals[position];
-        viewHolder.getName().setText(meals[position].getName());
+        viewHolder.getName().setText(Meal.convertToTitleCaseIteratingChars(meals[position].getName()));
         viewHolder.getCal().setText(meals[position].getCal());
 
         View clickResult = viewHolder.getThisView();
@@ -81,8 +81,6 @@ public class InfoRecyclerViewAdapter extends
 
             @Override
             public void onClick(View view) {
-                System.out.println("Yes");
-
                 AppCompatActivity activity = (AppCompatActivity) clickResult.getContext();
                 Fragment mealDetails = new MealDetailFragment(meal);
                 activity.getSupportFragmentManager()
