@@ -139,24 +139,48 @@ public class MealDetailFragment extends Fragment {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             assert document != null;
-                            if (document.exists()) {
-                                HashMap<String, Object> data = (HashMap<String, Object>) document.getData();
-                                ArrayList<Object> existedMeals = null;
 
-                                for (String key : data.keySet()) {
-                                    if (key.equals(date)) {
-                                        existedMeals = (ArrayList<Object>) ((HashMap<String, Object>) data.get(key)).get("meals");
+                            if (!document.exists()) {
+                                HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
+                                HashMap<String, HashMap> allData = new HashMap<>();
+                                ArrayList<Meal> meals = new ArrayList<>();
+                                meals.add(mealDetails);
+                                mData.put("meals", meals);
+                                allData.put(date, mData);
+
+                                db.collection("input-meals")
+                                        .document(userId)
+                                        .set(allData);
+                            } else {
+
+                                if (document.exists()) {
+                                    HashMap<String, Object> data = (HashMap<String, Object>) document.getData();
+                                    ArrayList<Object> existedMeals = null;
+
+                                    for (String key : data.keySet()) {
+                                        if (key.equals(date)) {
+                                            existedMeals = (ArrayList<Object>) ((HashMap<String, Object>) data.get(key)).get("meals");
+                                        }
                                     }
-                                }
 
-                                if (existedMeals != null) {
-                                    HashMap<String, ArrayList<Object>> mData = new HashMap<>();
-                                    existedMeals.add(mealDetails);
-                                    mData.put("meals", existedMeals);
+                                    if (existedMeals != null) {
+                                        HashMap<String, ArrayList<Object>> mData = new HashMap<>();
+                                        existedMeals.add(mealDetails);
+                                        mData.put("meals", existedMeals);
 
-                                    db.collection("input-meals")
-                                            .document(userId)
-                                            .update(FieldPath.of(date), mData);
+                                        db.collection("input-meals")
+                                                .document(userId)
+                                                .update(FieldPath.of(date), mData);
+                                    } else {
+                                        HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
+                                        ArrayList<Meal> meals = new ArrayList<>();
+                                        meals.add(mealDetails);
+                                        mData.put("meals", meals);
+
+                                        db.collection("input-meals")
+                                                .document(userId)
+                                                .update(FieldPath.of(date), mData);
+                                    }
                                 } else {
                                     HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
                                     ArrayList<Meal> meals = new ArrayList<>();
@@ -167,15 +191,6 @@ public class MealDetailFragment extends Fragment {
                                             .document(userId)
                                             .update(FieldPath.of(date), mData);
                                 }
-                            } else {
-                                HashMap<String, ArrayList<Meal>> mData = new HashMap<>();
-                                ArrayList<Meal> meals = new ArrayList<>();
-                                meals.add(mealDetails);
-                                mData.put("meals", meals);
-
-                                db.collection("input-meals")
-                                        .document(userId)
-                                        .update(FieldPath.of(date), mData);
                             }
                         }
                     }
