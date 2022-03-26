@@ -62,4 +62,5 @@
     <string name="nutritional_info">Nutritional Info</string>
     <string name="textview_info_noResults">no results</string>
     <string name="homepage_nomeal">There\'s no recorded meals for today :)</string>
+    <string name="button_mealDetail_back">Back</string>
 </resources>

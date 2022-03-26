@@ -125,8 +125,8 @@ public class MealDetailFragment extends Fragment {
         calcium.setText(mealDetails.getCalcium());
         iron.setText(mealDetails.getIron());
 
-        Button button = view.findViewById(R.id.button_meal_detail);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonAdd = view.findViewById(R.id.button_meal_detail);
+        buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -196,6 +196,14 @@ public class MealDetailFragment extends Fragment {
                         ((MainActivity) getActivity()).switchToHomePageFragment();
                     }
                 });
+            }
+        });
+        Button buttonBack = view.findViewById(R.id.button_mealDetail_back);
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.popBackStack();
             }
         });
     }
