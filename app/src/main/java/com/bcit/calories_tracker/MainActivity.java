@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
             fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.item_drawer_newmeal) {
-            Fragment fragment = InfoFragment.newInstance(null);
+            Fragment fragment = InfoFragment.newInstance(foods);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
             fragmentTransaction.commit();

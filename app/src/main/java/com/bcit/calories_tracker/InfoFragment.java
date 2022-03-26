@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,8 @@ import java.util.concurrent.Executors;
 public class InfoFragment extends Fragment {
     FirebaseFirestore db;
     Meal[] meals;
+    RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,10 +87,12 @@ public class InfoFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = (Meal[]) getArguments().getSerializable(ARG_PARAM1);
         }
+
         if (mParam1 != null && mParam1.length > 0) {
             meals = mParam1;
         } else {
-            loadJSONFromAsset();
+            loadJSONFromHttpRequest();
+//            loadJSONFromAsset();
         }
     }
 
@@ -101,7 +106,13 @@ public class InfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Search function goes here
+        progressBar = view.findViewById(R.id.progressBar_info);
+        // Hide progress bar if data is loaded
+        if (meals != null && meals.length > 0) {
+            progressBar.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         Button button = view.findViewById(R.id.button_info);
 
@@ -124,6 +135,25 @@ public class InfoFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void loadJSONFromHttpRequest() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        MealImporter mealImporter = new MealImporter(getActivity(), new DataRequest() {
+            @Override
+            public void onDataReceived(Meal[] importedMeals) {
+                mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        meals = importedMeals;
+                        mainActivity.setFoods(meals);
+                    }
+                });
+            }
+        });
+        executorService.submit(mealImporter);
     }
 
     public void loadJSONFromAsset() {
@@ -175,7 +205,6 @@ public class InfoFragment extends Fragment {
         }
     }
 
-    //
     private String readFromAsset(final Activity act, final String fileName) {
         String text = "";
         try {
