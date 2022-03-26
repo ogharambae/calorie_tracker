@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         this.configureDrawer();
 
-        Fragment fragment = HomepageFragment.newInstance("test", "test");
+        Fragment fragment = HomepageFragment.newInstance();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
         fragmentTransaction.commitAllowingStateLoss();
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else if (item.getItemId() == R.id.item_drawer_homepage) {
-            Fragment fragment = HomepageFragment.newInstance("test", "test");
+            Fragment fragment = HomepageFragment.newInstance();
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
             fragmentTransaction.commit();

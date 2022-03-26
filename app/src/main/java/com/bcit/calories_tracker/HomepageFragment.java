@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,10 +50,6 @@ public class HomepageFragment extends Fragment {
     private ArrayList<Meal> user_meals;
 
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public HomepageFragment() {
         db = FirebaseFirestore.getInstance();
         user_meals = new ArrayList<>();
@@ -67,11 +64,9 @@ public class HomepageFragment extends Fragment {
      * @return A new instance of fragment HomepageFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomepageFragment newInstance(String param1, String param2) {
+    public static HomepageFragment newInstance() {
         HomepageFragment fragment = new HomepageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,10 +74,6 @@ public class HomepageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -113,10 +104,8 @@ public class HomepageFragment extends Fragment {
     }
 
     private void populateMeal(View view, String userID) {
-
         DocumentReference docRef = db.collection("input-meals")
                 .document(userID);
-
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -124,35 +113,13 @@ public class HomepageFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Log.d("DocumentSnapshot data: ", document.getData().toString());
+                        HashMap documentData = (HashMap) document.getData();
+                        HashMap dayOfFood = (HashMap) documentData.get(Meal.getMealDate());
 
-                        HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
-                        ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
-
-                        System.out.println(allMeals);
-
-                        for (int i = 0; i < allMeals.size(); i++) {
-                            HashMap meal =
-                                    (HashMap) allMeals.get(i);
-
-                            user_meals.add(
-                                    new Meal((String) meal.get("name"),
-                                            (String) meal.get("cal"),
-                                            (String) meal.get("carb"),
-                                            (String) meal.get("fat"),
-                                            (String) meal.get("protein"),
-                                            2,
-                                            (String) meal.get("vitaminA"),
-                                            (String) meal.get("cholesterol"),
-                                            (String) meal.get("sodium"),
-                                            (String) meal.get("vitaminB"),
-                                            (String) meal.get("vitaminC"),
-                                            (String) meal.get("vitaminD"),
-                                            (String) meal.get("calcium"),
-                                            (String) meal.get("iron")
-                                    ));
-
-                            populateRecycler(view);
-                            populateTotalCaloriesBurned(view);
+                        if (dayOfFood == null) {
+                            displayNoMealInputToday(view);
+                        } else {
+                            displayMealToday(view, dayOfFood);
                         }
                     } else {
                         Log.d("No such document", "Nothing");
@@ -164,7 +131,48 @@ public class HomepageFragment extends Fragment {
         });
     }
 
+    void displayNoMealInputToday(View view) {
+        CardView cardView = view.findViewById(R.id.cardView_homepage);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_homepage);
 
+        cardView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+    }
+
+    void displayMealToday(View view, HashMap dayOfFood) {
+        CardView cardView = view.findViewById(R.id.cardView_homepage);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_homepage);
+
+        cardView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+
+        ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
+
+        for (int i = 0; i < allMeals.size(); i++) {
+            HashMap meal =
+                    (HashMap) allMeals.get(i);
+
+            user_meals.add(
+                    new Meal((String) meal.get("name"),
+                            (String) meal.get("cal"),
+                            (String) meal.get("carb"),
+                            (String) meal.get("fat"),
+                            (String) meal.get("protein"),
+                            2,
+                            (String) meal.get("vitaminA"),
+                            (String) meal.get("cholesterol"),
+                            (String) meal.get("sodium"),
+                            (String) meal.get("vitaminB"),
+                            (String) meal.get("vitaminC"),
+                            (String) meal.get("vitaminD"),
+                            (String) meal.get("calcium"),
+                            (String) meal.get("iron")
+                    ));
+
+            populateRecycler(view);
+            populateTotalCaloriesBurned(view);
+        }
+    }
 
     void getMeals(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -172,7 +180,6 @@ public class HomepageFragment extends Fragment {
         if (user == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
-
         } else {
             String userId = user.getUid();
             populateMeal(view, userId);
