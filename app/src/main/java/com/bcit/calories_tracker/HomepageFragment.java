@@ -47,7 +47,6 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     FirebaseFirestore db;
     private ArrayList<Meal> user_meals;
-//    private String userId;
 
 
     // TODO: Rename and change types of parameters
@@ -57,8 +56,6 @@ public class HomepageFragment extends Fragment {
     public HomepageFragment() {
         db = FirebaseFirestore.getInstance();
         user_meals = new ArrayList<>();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        userId = user.getUid();
     }
 
     /**
@@ -115,6 +112,59 @@ public class HomepageFragment extends Fragment {
         caloriesBurnedToday.setText(yourCalories);
     }
 
+    private void populateMeal(View view, String userID) {
+
+        DocumentReference docRef = db.collection("input-meals")
+                .document(userID);
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("DocumentSnapshot data: ", document.getData().toString());
+
+                        HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
+                        ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
+
+                        System.out.println(allMeals);
+
+                        for (int i = 0; i < allMeals.size(); i++) {
+                            HashMap meal =
+                                    (HashMap) allMeals.get(i);
+
+                            user_meals.add(
+                                    new Meal((String) meal.get("name"),
+                                            (String) meal.get("cal"),
+                                            (String) meal.get("carb"),
+                                            (String) meal.get("fat"),
+                                            (String) meal.get("protein"),
+                                            2,
+                                            (String) meal.get("vitaminA"),
+                                            (String) meal.get("cholesterol"),
+                                            (String) meal.get("sodium"),
+                                            (String) meal.get("vitaminB"),
+                                            (String) meal.get("vitaminC"),
+                                            (String) meal.get("vitaminD"),
+                                            (String) meal.get("calcium"),
+                                            (String) meal.get("iron")
+                                    ));
+
+                            populateRecycler(view);
+                            populateTotalCaloriesBurned(view);
+                        }
+                    } else {
+                        Log.d("No such document", "Nothing");
+                    }
+                } else {
+                    Log.d("get failed with ", task.getException().toString());
+                }
+            }
+        });
+    }
+
+
 
     void getMeals(View view) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -122,60 +172,10 @@ public class HomepageFragment extends Fragment {
         if (user == null) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
+
         } else {
-
             String userId = user.getUid();
-
-            DocumentReference docRef = db.collection("input-meals")
-                    .document(userId);
-
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d("DocumentSnapshot data: ", document.getData().toString());
-
-                            HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
-                            ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
-
-                            System.out.println(allMeals);
-
-                            for (int i = 0; i < allMeals.size(); i++) {
-                                HashMap meal =
-                                        (HashMap) allMeals.get(i);
-
-                                user_meals.add(
-                                        new Meal((String) meal.get("name"),
-                                                (String) meal.get("cal"),
-                                                (String) meal.get("carb"),
-                                                (String) meal.get("fat"),
-                                                (String) meal.get("protein"),
-                                                2,
-                                                (String) meal.get("vitaminA"),
-                                                (String) meal.get("cholesterol"),
-                                                (String) meal.get("sodium"),
-                                                (String) meal.get("vitaminB"),
-                                                (String) meal.get("vitaminC"),
-                                                (String) meal.get("vitaminD"),
-                                                (String) meal.get("calcium"),
-                                                (String) meal.get("iron")
-                                        ));
-
-                                populateRecycler(view);
-                                populateTotalCaloriesBurned(view);
-                            }
-                        } else {
-                            Log.d("No such document", "Nothing");
-                        }
-                    } else {
-                        Log.d("get failed with ", task.getException().toString());
-                    }
-                }
-            });
-
-
+            populateMeal(view, userId);
         }
     }
 
