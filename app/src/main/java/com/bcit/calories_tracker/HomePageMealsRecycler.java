@@ -22,6 +22,7 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
         private final TextView fat;
         private final TextView carbs;
         private final TextView protein;
+        private final TextView dateConsumed;
 
         public ViewHolder(View view) {
             super(view);
@@ -30,6 +31,7 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
             fat = view.findViewById(R.id.fat_homepage);
             carbs = view.findViewById(R.id.carb_homepage);
             protein = view.findViewById(R.id.protein_homepage);
+            dateConsumed = view.findViewById(R.id.dateConsumed_homepage);
         }
 
         public TextView getCarbs() {
@@ -50,6 +52,10 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
 
         public TextView getFat() {
             return fat;
+        }
+
+        public TextView getDateConsumed() {
+            return dateConsumed;
         }
 
 
@@ -82,15 +88,18 @@ public class HomePageMealsRecycler extends RecyclerView.Adapter<HomePageMealsRec
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         String fat = "Fat: " + localDataSet[position].getFat();
-        String cal = "Cal: " + localDataSet[position].getCal();
+        String calValue = localDataSet[position].getCal();
+        String cal = calValue.replaceAll("[^.0-9]", "") + " cal";
         String protein = "Protein: " + localDataSet[position].getProtein();
         String carb = "Carbs: " + localDataSet[position].getProtein();
+        String date = "Date: " + Meal.getMealDate();
+
         viewHolder.getFoodName().setText(localDataSet[position].getName());
         viewHolder.getCalories().setText(cal);
         viewHolder.getFat().setText(fat);
         viewHolder.getCarbs().setText(carb);
         viewHolder.getProtein().setText(protein);
-
+        viewHolder.getDateConsumed().setText(date);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

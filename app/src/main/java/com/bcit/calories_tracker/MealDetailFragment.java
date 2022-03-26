@@ -110,9 +110,7 @@ public class MealDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-                LocalDateTime now = LocalDateTime.now();
-                String date = dtf.format(now);
+                String date = Meal.getMealDate();
 
                 DocumentReference docRef = db.collection("input-meals").document(userId);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

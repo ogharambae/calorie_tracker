@@ -1,6 +1,9 @@
 package com.bcit.calories_tracker;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Meal implements Serializable {
     String name;
@@ -83,11 +86,28 @@ public class Meal implements Serializable {
 
     public static String calculateTotalCal(Meal[] meals) {
         int total_calories = 0;
-        for (Meal meal: meals) {
+        for (Meal meal : meals) {
             String calorieCount = meal.getCal();
-            String calValue = calorieCount.replaceAll("[^0-9]","");
-            total_calories += Integer.parseInt(calValue);
+            String calValue = calorieCount.replaceAll("[^.0-9]", "");
+            total_calories += Float.parseFloat(calValue);
         }
         return total_calories + " cal";
     }
+
+    public static String calculateTotalCal(ArrayList<Meal> meals) {
+        int total_calories = 0;
+        for (Meal meal : meals) {
+            String calorieCount = meal.getCal();
+            String calValue = calorieCount.replaceAll("[^.0-9]", "");
+            total_calories += Float.parseFloat(calValue);
+        }
+        return total_calories + "";
+    }
+
+    public static String getMealDate() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+
 }

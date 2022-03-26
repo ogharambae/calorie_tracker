@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
             fragmentTransaction.commit();
         } else if (item.getItemId() == R.id.item_drawer_newmeal) {
-            Fragment fragment = NewMealFragment.newInstance(null);
+            Fragment fragment = InfoFragment.newInstance(null);
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
             fragmentTransaction.commit();
@@ -105,13 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //close navigation drawer
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void switchToNewMealFragment(Meal[] meals) {
-        Fragment fragment = NewMealFragment.newInstance(meals);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView_main, fragment);
-        fragmentTransaction.commit();
     }
 
     public void switchToInfoFragment() {

@@ -5,16 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecyclerViewAdapter.ViewHolder> {
@@ -33,7 +27,7 @@ public class HistoryRecyclerViewAdapter extends RecyclerView.Adapter<HistoryRecy
         public ViewHolder(View view) {
             super(view);
 
-            textViewTotalCal = view.findViewById(R.id.textView_history_item_totalcal);
+            textViewTotalCal = view.findViewById(R.id.textView_history_detail_cal);
             textViewDate = view.findViewById(R.id.textView_history_item_date);
             thisView = view;
         }

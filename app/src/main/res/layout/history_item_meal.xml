@@ -25,7 +25,7 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/textView_history_item_totalcal"
+                    android:id="@+id/textView_history_detail_cal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

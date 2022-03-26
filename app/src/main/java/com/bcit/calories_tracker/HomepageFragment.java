@@ -18,10 +18,15 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +46,8 @@ public class HomepageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     FirebaseFirestore db;
     private ArrayList<Meal> user_meals;
-    private Integer total_calories;
+    private String userId;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -50,7 +56,8 @@ public class HomepageFragment extends Fragment {
     public HomepageFragment() {
         db = FirebaseFirestore.getInstance();
         user_meals = new ArrayList<>();
-        total_calories = 0;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        userId = user.getUid();
     }
 
     /**
@@ -96,75 +103,62 @@ public class HomepageFragment extends Fragment {
         rcv.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
-    private void calculateTotalCalories() {
-        for (Meal meal: user_meals) {
-
-            String calorieCount = meal.getCal();
-            String calValue = calorieCount.replaceAll("[^0-9]","");
-            total_calories += Integer.parseInt(calValue);
-        }
-        System.out.println(total_calories);
-    }
-
     private void populateTotalCaloriesBurned(View view) {
+
+        String cals = Meal.calculateTotalCal(user_meals);
         TextView caloriesBurnedToday = view.findViewById(R.id.cals_burned_homepage);
         ProgressBar caloriesBar = view.findViewById(R.id.calories_bar_homepage);
-        caloriesBar.setMax(1000);
-        caloriesBar.setProgress(total_calories);
-        String yourCalories = total_calories + " Calories";
+        caloriesBar.setMax(2000);
+        caloriesBar.setProgress(Integer.parseInt(cals));
+        String yourCalories = cals + " Calories";
         caloriesBurnedToday.setText(yourCalories);
     }
 
+
     void getMeals(View view) {
 
-        db.collection("input-meals")
-                .get()
-                .addOnCompleteListener(
-                        new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        DocumentReference docRef = db.collection("input-meals")
+                .document(userId);
 
-                                // use to get the corresponding time for this meal.
-                                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-                                LocalDateTime now = LocalDateTime.now();
-                                String date = dtf.format(now);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("DocumentSnapshot data: ", document.getData().toString());
 
-                                if (task.isSuccessful()) {
+                        HashMap dayOfFood = (HashMap) document.getData().get(Meal.getMealDate());
+                        ArrayList allMeals = (ArrayList) dayOfFood.get("meals");
 
-                                    try {
+                        System.out.println(allMeals);
 
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            Log.d("Debug", document.getData().toString());
-                                            HashMap<String, ArrayList> mealEntry
-                                                    = (HashMap) document.getData().get("03-22-2022");
+                        for (int i = 0; i < allMeals.size(); i++) {
+                            HashMap meal =
+                                    (HashMap) allMeals.get(i);
 
-                                            for (int i = 0; i < mealEntry.get("meals").size(); i++) {
-                                                HashMap meal =
-                                                        (HashMap) mealEntry.get("meals").get(i);
+                            user_meals.add(
+                                    new Meal((String) meal.get("name"),
+                                            (String) meal.get("cal"),
+                                            (String) meal.get("carb"),
+                                            (String) meal.get("fat"),
+                                            (String) meal.get("protein"),
+                                            2
+                                    ));
 
-                                                user_meals.add(
-                                                        new Meal((String) meal.get("name"),
-                                                                (String) meal.get("cal"),
-                                                                (String) meal.get("carb"),
-                                                                (String) meal.get("fat"),
-                                                                (String) meal.get("protein"),
-                                                                2
-                                                        )
-                                                );
-                                            }
-                                        }
-
-                                        populateRecycler(view);
-                                        calculateTotalCalories();
-                                        populateTotalCaloriesBurned(view);
-
-                                    } catch (NullPointerException e) {
-                                        Log.d("Debug", "NULL POINTER");
-                                    }
-                                }
-                            }
+                            populateRecycler(view);
+                            populateTotalCaloriesBurned(view);
                         }
-                );
+                    } else {
+                        Log.d("No such document", "Nothing");
+                    }
+                } else {
+                    Log.d("get failed with ", task.getException().toString());
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -175,7 +169,7 @@ public class HomepageFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) getActivity()).switchToNewMealFragment(null);
+                ((MainActivity) getActivity()).switchToInfoFragment();
             }
         });
     }
