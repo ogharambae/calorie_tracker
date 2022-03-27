@@ -91,7 +91,6 @@ public class HomepageFragment extends Fragment {
     }
 
     private void populateTotalCaloriesBurned(View view) {
-
         String cals = Meal.calculateTotalCal(user_meals);
         TextView caloriesBurnedToday = view.findViewById(R.id.cals_burned_homepage);
         ProgressBar caloriesBar = view.findViewById(R.id.calories_bar_homepage);
@@ -135,6 +134,7 @@ public class HomepageFragment extends Fragment {
 
         cardView.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        populateTotalCaloriesBurned(view);
     }
 
     void displayMealToday(View view, HashMap dayOfFood) {
