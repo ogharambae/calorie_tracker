@@ -26,9 +26,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -140,6 +144,18 @@ public class HistoryFragment extends Fragment {
                             user_meals.add(dailyMeals);
                         }
 
+                        user_meals.sort(new Comparator<Meal[]>() {
+                            @Override
+                            public int compare(Meal[] meals, Meal[] t1) {
+                                try {
+                                    Date date1 = new SimpleDateFormat("MM-dd-yyyy").parse(meals[0].getDate());
+                                    Date date2 = new SimpleDateFormat("MM-dd-yyyy").parse(t1[0].getDate());
+                                    return date2.compareTo(date1);
+                                } catch (ParseException e) {
+                                    return 1;
+                                }
+                            }
+                        });
 
                         RecyclerView rcv = view.findViewById(R.id.recyclerView_history);
                         HistoryRecyclerViewAdapter mealAdapter =

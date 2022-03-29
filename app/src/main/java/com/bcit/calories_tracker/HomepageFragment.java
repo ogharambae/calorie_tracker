@@ -119,10 +119,10 @@ public class HomepageFragment extends Fragment {
                             displayMealToday(view, dayOfFood);
                         }
                     } else {
-                        Log.d("No such document", "Nothing");
+                        displayNoMealInputToday(view);
                     }
                 } else {
-                    Log.d("get failed with ", task.getException().toString());
+                    displayNoMealInputToday(view);
                 }
             }
         });
